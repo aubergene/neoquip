@@ -1,0 +1,165 @@
+<!<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>neoquip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 20px;
+            /* background: url('cord-tile.png') */
+        }
+
+        html {
+            font-size: 30px;
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        .cord {
+            display: inline-block;
+            background: url('cord-tile.png') repeat-y;
+            margin: 50px 20px;
+        }
+
+        .knot {
+            display: block;
+            margin: 0 8px;
+            width: 200px;
+            height: 200px;
+            background-repeat: no-repeat;
+        }
+
+        /* 
+            Use Artillery_loop for zero
+            https://en.wikipedia.org/wiki/Artillery_loop
+         */
+
+        .knot-0 {
+            background-image: url('knot-0.png');
+            background-position-x: 20px;
+        }
+
+        .knot-1 {
+            background-image: url('knot-1.png');
+            background-position-x: -8px;
+        }
+
+        .knot-2 {
+            background-image: url('knot-2.png');
+            background-position-x: -4px;
+        }
+
+        .knot-3 {
+            background-image: url('knot-3.png');
+            background-position-x: 2px;
+        }
+
+        .knot-4 {
+            background-image: url('knot-4.png');
+            background-position-x: -4px;
+        }
+
+        .knot-5 {
+            background-image: url('knot-5.png');
+            background-position-x: -9px;
+        }
+
+        .knot-6 {
+            background-image: url('knot-6.png');
+            background-position-x: -4px;
+        }
+
+        .knot-7 {
+            background-image: url('knot-7.png');
+            background-position-x: -6px;
+        }
+
+        .knot-8 {
+            background-image: url('knot-8.png');
+            background-position-x: -9px;
+        }
+
+        .knot-9 {
+            background-image: url('knot-9.png');
+            background-position-x: -9px;
+        }
+
+        .knot-end {
+            background-image: url('knot-end.png');
+            background-position-y: 95px;
+            background-position-x: -6px;
+        }
+
+        #input {
+            font-size: 22px;
+            padding: 4px;
+            width: 20em;
+            text-align: center;
+        }
+
+        #neoquip {
+            margin: 4 0px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>neoquip</h1>
+
+<p>A speculative rope encoding of numbers based on Quipu (Khipu)</p>
+
+<input id="input" type="text" autofocus="autofocus" placeholder="Enter numbers, separated by commas" />
+
+<div id="neoquip"></div>
+
+<script src="d3.js"></script>
+
+<script>
+
+
+    var el = d3.select('#neoquip')
+
+    var input = d3.select('#input')
+
+    input.on('input', function() { 
+        var val = this.value.replace(/[^0-9,]/g, '')
+        this.value = val
+        console.log('here', val) 
+        render(val.split(','))
+    })
+
+    render(['0123456789', '9876543210'])
+
+    function render(data) {
+        el.selectAll('.cord').remove()
+
+        if (!data.length) return
+
+        var cords = el.selectAll('.cord')
+            .data(data)
+            .enter()
+            .append('div')
+            .classed('cord', true)
+            .style('background-position', (d, i) => '0% ' + (i / data.length) * 100 + '%')
+
+        var knots = cords.selectAll('.knot')
+            .data(d => d.toString().split(''))
+            .enter()
+            .append('div')
+            .attr('class', (d) => `knot knot-${d}`)
+
+        cords.append('div')
+            .attr('class', 'knot knot-end')
+    }
+
+
+
+</script>
+
+
+</body>
+</html>

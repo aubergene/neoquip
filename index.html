@@ -1,0 +1,75 @@
+<!<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .knot {
+            background: #eee;
+            padding: 2px;
+            margin: 2px 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>hello</h1>
+
+<script src="d3.js"></script>
+
+<script>
+
+    d3.csv('data.csv')
+    // d3.csv('query_result.csv')
+        .then(render)
+
+    // d3.csv('data.csv'), (row) => {
+    //     console.log('here')
+    //     console.log(row)
+    // })
+
+    function render(data) {
+        // console.log(data)
+        console.log(data[0])
+        console.log('here')
+
+        const cords = d3.nest()
+            .key(d => d.CORD_ID)
+            .key(d => d.CLUSTER_ID)
+            .entries(data)
+
+        console.log(cords)
+
+        const cordEls = d3.select('.cord')
+            .data(cords)
+            .enter()
+            .append('div')
+            
+        cordEls.append('h2').text(d => d.key)
+
+        const clusterEls = cordEls.selectAll('.cluster')
+            .data(d => d.values)
+            .enter()
+            .append('div')
+
+        clusterEls.selectAll('.knot')
+            .data(d => d.values)
+            .enter()
+            .append('span')
+            .classed('knot', true)
+            .text(d => d.KNOT_VALUE_DECIMAL + ' - ' + d.KNOT_ID)
+
+
+    }
+
+
+
+</script>
+
+
+</body>
+</html>
