@@ -10,10 +10,15 @@
             margin: 20px;
         }
 
-        html {
+        main {
             font-size: 30px;
             font-family: sans-serif;
             text-align: center;
+        }
+
+        footer {
+            font-size: 20px;
+            font-family: sans-serif;
         }
 
         .neoquip {
@@ -106,6 +111,9 @@
             font-size: 22px;
             padding: 4px;
             width: 20em;
+            max-width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #333;
             text-align: center;
         }
 
@@ -117,6 +125,7 @@
 
 <body>
 
+<main>
 <h1>neoquip</h1>
 
 <p>An experimental rope encoding of numbers based on Quipu (Khipu)</p>
@@ -124,6 +133,15 @@
 <input id="input" type="text" autofocus="autofocus" placeholder="Enter numbers, separated by commas" />
 
 <div class="neoquip"></div>
+</main>
+
+<footer>
+    <p>This site was created as part of the 
+        <a href="https://www.gold.ac.uk/pg/ma-computational-arts/">Goldsmiths Computation Arts MA</a> 2018 by 
+        <a href="https://aubergene.com">Julian Burgess</a> &amp;
+        <a href="https://izzymclellan.com/">Izzy Mclellan</a>.
+        <a href="https://github.com/aubergene/neoquip">More information</a>.</p>
+</footer>    
 
 <script src="d3.js"></script>
 
@@ -139,7 +157,11 @@
     if (location.hash) {
         render(location.hash)
     } else {
-        render('7,15,12,4,19,13,9,20,8,19')
+        if (window.innerWidth < 600) {
+            render('123, 642')
+        } else {
+            render('7,15,12,4,19,13,9,20,8,19')
+        }
     }
 
 
